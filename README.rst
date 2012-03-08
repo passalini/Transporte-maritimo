@@ -1,7 +1,7 @@
 Transporte-maritimo
 ====
 
-Projeto para a matéria de Paradigma OO, usando OORB (https://github.com/rodrigomanhaes/oorb)
+Projeto para a matéria de Paradigma OO, usando *OORB* (https://github.com/rodrigomanhaes/oorb)
 
 O que deveria ser
 --------------
@@ -13,10 +13,10 @@ No momento em que a carga é aceita para ser transportada, é colada uma etiquet
 No fim do expediente o supervisor, para cada carga não embarcada, consulta uma relação contendo os navios e os portos que pertencem á rota dos navios. Caso encontre um navio que passe pelo porto destino antes da data máxima para desembarque e possua capacidade disponível, a carga é “embarcada” neste navio (se o navio passar por este porto mais de uma vez, a carga será desembarcada, sempre, na primeira chegada ao porto).
 
 O sistema deve ser capaz de emitir:
-a) Relatório dos navios e suas rotas, informando para cada navio: seu nome, sua capacidade máxima de transporte em (Kg), e a relação de portos (nome do porto) de sua rota, com a data de chegada em cada porto destino.
-b) Relatório das cargas embarcadas, informando: número da carga, porto destino, navio, data máxima para desembarque da carga, e data na qual o navio vai chegar no porto.
-c) Relatório das cargas não embarcadas, informando: número da carga, porto destino, data máxima para desembarque da carga, e código do agente receptor.
-d) Relatório contendo, para cada porto, todos os navios que passarão por lá.
-e) Relatório de todas as cargas não embarcadas porque não existe navio que passe pelo porto destino.
-f) Relatório de navios em manutenção (não possuem rota).
-g) Relação de todos os agentes de um determinado porto, com código e nome de cada agente, que não estão recepcionando nenhuma carga.
+- a) Relatório dos navios e suas rotas, informando para cada navio: seu nome, sua capacidade máxima de transporte em (Kg), e a relação de portos (nome do porto) de sua rota, com a data de chegada em cada porto destino.
+- b) Relatório das cargas embarcadas, informando: número da carga, porto destino, navio, data máxima para desembarque da carga, e data na qual o navio vai chegar no porto.
+- c) Relatório das cargas não embarcadas, informando: número da carga, porto destino, data máxima para desembarque da carga, e código do agente receptor.
+- d) Relatório contendo, para cada porto, todos os navios que passarão por lá.
+- e) Relatório de todas as cargas não embarcadas porque não existe navio que passe pelo porto destino.
+- f) Relatório de navios em manutenção (não possuem rota).
+- g) Relação de todos os agentes de um determinado porto, com código e nome de cada agente, que não estão recepcionando nenhuma carga.

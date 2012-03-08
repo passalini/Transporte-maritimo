@@ -1,10 +1,8 @@
-Transporte-maritimo
-====
+#Transporte-maritimo
 
-Projeto para a matéria de Paradigma OO, usando *OORB* (https://github.com/rodrigomanhaes/oorb)
+Projeto para a matéria de Paradigma OO, usando **OORB** (https://github.com/rodrigomanhaes/oorb)
 
-O que deveria ser
---------------
+#O que deveria ser
 
 Minimundo 
 

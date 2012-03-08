@@ -1,53 +1,22 @@
-OORB
+Transporte-maritimo
 ====
 
-A minimal "framework", on top of ActiveRecord, for running object models in Ruby.
+Projeto para a matéria de Paradigma OO, usando OORB (https://github.com/rodrigomanhaes/oorb)
 
-OORB doesn't have any production pretensions. It was created only to be a tool for my OO classes.
-
-
-How to install
+O que deveria ser
 --------------
 
-Firstly, you must have Ruby installed (at this moment, 1.9.2, please!).
+Minimundo 
 
-So you can run (as root, depending on your environment)::
+Uma empresa de transporte marítimo deseja um sistema automatizado que a auxilie a alocar as cargas nos navios, de acordo com sua capacidade e destino. Cada carga deverá ser transportada integralmente por um único navio sem “transbordo”, ou seja, não pode ser dividida por mais de um navio, nem fazer “baldeação” (descer em um porto e ser embarcada em outro navio).
+No momento em que a carga é aceita para ser transportada, é colada uma etiqueta contendo o número desta carga, o porto destino, seu peso em Kg, a data máxima para desembarque no porto destino (caso isto não seja atendido a empresa pagará uma multa diária), o código do agente receptor no porto destino, e a data de validade, no caso de carga perecível, ou a temperatura máxima no caso de carga sensível. Todo porto possui vários agentes receptores (cada agente opera em um único porto) e esta escolha é feita por indicação interna.
+No fim do expediente o supervisor, para cada carga não embarcada, consulta uma relação contendo os navios e os portos que pertencem á rota dos navios. Caso encontre um navio que passe pelo porto destino antes da data máxima para desembarque e possua capacidade disponível, a carga é “embarcada” neste navio (se o navio passar por este porto mais de uma vez, a carga será desembarcada, sempre, na primeira chegada ao porto).
 
-    $ gem install bundler
-    $ bundle install
-
-For running SQLite 3, you may have to install some system dependencies. Search engines are your friends.
-
-RVM gemsets are strongly recommended.
-
-
-
-How to create models
---------------------
-
-You can use migrations for creating your tables. See an example at db/migrate directory. In order to create your tables, just run::
-
-    $ rake migrate
-
-The domain folder has an example of model class.
-
-
-How to run specs/tests
-----------------------
-
-The spec folder has an example of a RSpec specification. Your specs can be run in the same way regular RSpec tests are run::
-
-    $ rspec spec/your_spec.rb
-
-
-I don't know ActiveRecord
--------------------------
-
-Please read "Models" section at `Rails docs <http://guides.rubyonrails.org>`_.
-
-
-I don't know Ruby
------------------
-
-Go to `Ruby documentation <http://www.ruby-lang.org/en/documentation>`_.
-
+O sistema deve ser capaz de emitir:
+a) Relatório dos navios e suas rotas, informando para cada navio: seu nome, sua capacidade máxima de transporte em (Kg), e a relação de portos (nome do porto) de sua rota, com a data de chegada em cada porto destino.
+b) Relatório das cargas embarcadas, informando: número da carga, porto destino, navio, data máxima para desembarque da carga, e data na qual o navio vai chegar no porto.
+c) Relatório das cargas não embarcadas, informando: número da carga, porto destino, data máxima para desembarque da carga, e código do agente receptor.
+d) Relatório contendo, para cada porto, todos os navios que passarão por lá.
+e) Relatório de todas as cargas não embarcadas porque não existe navio que passe pelo porto destino.
+f) Relatório de navios em manutenção (não possuem rota).
+g) Relação de todos os agentes de um determinado porto, com código e nome de cada agente, que não estão recepcionando nenhuma carga.

@@ -15,7 +15,7 @@ describe "embarcar carga" do
 
 	    supervisor.embarcar(carga,navio)
 
-	    navio.cargas.should include carga
+	    navio.carga_embarcadas.should include carga
 
 	end
 end

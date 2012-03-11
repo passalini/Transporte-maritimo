@@ -2,7 +2,7 @@
 require './spec/spec_helper'
 
 describe "embarcar carga" do
-	it "carga só sera embarcada se navio não estiver 'transbodado'" do 
+	it "embarcar uma carga qualquer em um navio" do 
 		agente = Agente.create! nome: "Derp"
 		porto = Porto.create! nome: "Porto Qualquer"
 		carga = Carga.create! numero: 001, peso: 100, data_max_desembarque: Date.today + 15.days,
@@ -15,7 +15,6 @@ describe "embarcar carga" do
 
 	    supervisor.embarcar(carga,navio)
 
-	    navio.carga_embarcadas.should include carga
-
+	    navio.carga_embarcadas.should include CargaEmbarcada.find_by_numero(carga.numero)
 	end
 end

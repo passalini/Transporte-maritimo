@@ -1,7 +1,4 @@
 require './spec/spec_helper'
-require './domain/navio'
-require './domain/porto'
-require './domain/rota'
 
 describe Navio do
   before do

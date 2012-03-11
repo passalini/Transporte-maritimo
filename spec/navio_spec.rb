@@ -10,7 +10,7 @@ describe Navio do
 
     navio = Navio.create! nome: 'Navio1', capacidade: '550'
     navio.rotas.create porto: @porto1, data_chegada: Date.tomorrow
-    navio.rotas.create porto: @porto2, data_chegada: Date.tomorrow
+    navio.rotas.create porto: @porto2, data_chegada: Date.today + 5.days
   end
 
   it 'criar um navio' do
@@ -25,8 +25,8 @@ describe Navio do
   it "deve conter um porto e data de chegada no mesmo" do 
     navio = Navio.find_by_nome 'Navio1'
 
-    navio.rotas.first.data_chegada.should == Date.tomorrow
-    navio.rotas.first.porto.should == @porto1
+    navio.rotas.find_by_porto_id(@porto1.id).data_chegada.should == Date.tomorrow
+    navio.rotas.find_by_porto_id(@porto2.id).data_chegada.should == Date.today + 5.days
   end
 end
 

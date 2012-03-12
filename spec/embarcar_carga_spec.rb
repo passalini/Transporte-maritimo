@@ -11,8 +11,6 @@ describe "Embarcar carga" do
     porto1 = Porto.create! nome: "Porto qualquer"
     @navio = Navio.create! nome: 'Navio1', capacidade: '550'
     @navio.rotas.create porto: porto1, data_chegada: Date.tomorrow + 3.days
-
-    @supervisor = Supervisor.new
   end
 
   it "deve ser possivel se não esceder a capacidade do navio" do 

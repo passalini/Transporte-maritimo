@@ -17,7 +17,7 @@ describe "Embarcar carga" do
     @navio.capacidade = 0
       
     @carga.embarcar @navio
-    Navio.find_by_name(@navio.name).cargas_embarcadas.should_not include @carga
+    Navio.find_by_nome(@navio.nome).cargas.should_not include @carga
   end
   
 end

@@ -6,7 +6,7 @@ class Carga < ActiveRecord::Base
 
 	def embarcar (navio)
 		if self.peso <= navio.capacidade
-			navio.cargas << carga
+			navio.cargas << self
 		end
 	end
 end

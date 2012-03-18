@@ -42,5 +42,12 @@ describe "Embarcar carga" do
 
     Navio.find_by_nome(navio2.nome).cargas.should include @carga
   end
+
+  it "carga deve estar no mesmo porto q navio" do 
+    @carga.update_attributes(porto_origem: @porto2, porto_destino: @porto1)
+    @carga.embarcar @navio
+
+    Navio.find_by_nome(@navio.nome).cargas.should_not include @carga
+  end
   
 end

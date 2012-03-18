@@ -4,10 +4,11 @@ require './spec/spec_helper'
 describe "Embarcar carga" do
   before do
     agente = Agente.create! nome: "Derp"
-    @porto1 = Porto.create! nome: "Porto qualquer"
+    @porto1 = Porto.create! nome: "Porto origem da carga"
     @porto2 = Porto.create! nome: "Porto destino da carga"
+    @porto3 = Porto.create! nome: "Porto qualquer"
     @carga = Carga.create! numero: 001, peso: 100, data_max_desembarque: Date.today + 15.days,
-                            porto_destino: @porto2, agente: agente
+                            porto_origem: @porto1 , porto_destino: @porto2, agente: agente
       
     @navio = Navio.create! nome: 'Navio1', capacidade: '550'
     @navio.viagens.create porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 3.days
@@ -44,7 +45,12 @@ describe "Embarcar carga" do
   end
 
   it "carga deve estar no mesmo porto q navio" do 
-    @carga.update_attributes(porto_origem: @porto2, porto_destino: @porto1)
+    @carga.update_attributes(porto_origem: @porto3, porto_destino: @porto2)
+    @carga.embarcar @navio
+
+    Navio.find_by_nome(@navio.nome).cargas.should_not include @carga
+
+    @navio.viagens.create porto_origem: @porto3, porto_destino: @porto1, data_chegada: Date.tomorrow + 3.days
     @carga.embarcar @navio
 
     Navio.find_by_nome(@navio.nome).cargas.should_not include @carga

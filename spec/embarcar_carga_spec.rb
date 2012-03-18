@@ -4,16 +4,16 @@ require './spec/spec_helper'
 describe "Embarcar carga" do
   before do
     agente = Agente.create! nome: "Derp"
-    porto = Porto.create! nome: "Porto destino da carga"
+    @porto1 = Porto.create! nome: "Porto qualquer"
+    @porto2 = Porto.create! nome: "Porto destino da carga"
     @carga = Carga.create! numero: 001, peso: 100, data_max_desembarque: Date.today + 15.days,
-                            porto: porto, agente: agente
+                            porto: @porto2, agente: agente
       
-    porto1 = Porto.create! nome: "Porto qualquer"
     @navio = Navio.create! nome: 'Navio1', capacidade: '550'
-    @navio.rotas.create porto: porto1, data_chegada: Date.tomorrow + 3.days
+    @navio.viagens.create porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 3.days
   end
 
-  it "deve ser possivel se não esceder a capacidade do navio" do 
+  it "deve ser possivel se não exceder a capacidade do navio" do 
     @navio.capacidade = 0
       
     @carga.embarcar @navio
@@ -23,6 +23,19 @@ describe "Embarcar carga" do
 
     @carga.embarcar @navio
     Navio.find_by_nome(@navio.nome).cargas.should include @carga
+  end
+
+  it "deve ser possivel se o navio passar pelo porto destino da carga" do 
+    navio2 = Navio.create! nome: 'Navio2', capacidade: '550'
+    navio2.viagens.create porto_origem: @porto2, porto_destino: @porto1, data_chegada: Date.tomorrow + 3.days
+
+    @carga.embarcar(navio2)
+    Navio.find_by_nome(navio2.nome).cargas.should_not include @carga
+
+    navio2.viagens.create porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 20.days
+    @carga.embarcar(navio2)
+    
+    Navio.find_by_nome(navio2.nome).cargas.should include @carga
   end
   
 end

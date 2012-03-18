@@ -5,7 +5,7 @@ class Carga < ActiveRecord::Base
 	belongs_to :agente
 
 	def embarcar (navio)
-		if self.peso <= navio.capacidade
+		if self.peso <= navio.capacidade and navio.portos.include? self.porto
 			navio.cargas << self
 		end
 	end

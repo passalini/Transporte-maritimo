@@ -7,7 +7,7 @@ describe "Embarcar carga" do
     @porto1 = Porto.create! nome: "Porto qualquer"
     @porto2 = Porto.create! nome: "Porto destino da carga"
     @carga = Carga.create! numero: 001, peso: 100, data_max_desembarque: Date.today + 15.days,
-                            porto: @porto2, agente: agente
+                            porto_destino: @porto2, agente: agente
       
     @navio = Navio.create! nome: 'Navio1', capacidade: '550'
     @navio.viagens.create porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 3.days

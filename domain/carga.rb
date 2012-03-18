@@ -6,8 +6,8 @@ class Carga < ActiveRecord::Base
   belongs_to :agente
 
 	def embarcar (navio)
-		if self.peso <= navio.capacidade and navio.portos.include? self.porto_destino
-			navio.cargas << self if navio.viagens.find_by_porto_destino_id(self.porto_destino.id).data_chegada <= self.data_max_desembarque
+		if self.peso <= navio.capacidade and navio.portos_destino.include? self.porto_destino and navio.portos_origem.include? self.porto_origem
+			navio.cargas << self if navio.data_de_chegada(self.porto_destino) <= self.data_max_desembarque
 		end
 	end
 end

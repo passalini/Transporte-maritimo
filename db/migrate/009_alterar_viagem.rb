@@ -1,4 +1,4 @@
-class AlterarViagen < ActiveRecord::Migration
+class AlterarViagem < ActiveRecord::Migration
   def self.up
     change_table :viagens do |t|
       t.timestamps

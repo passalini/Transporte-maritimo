@@ -1,7 +1,7 @@
 #encoding: utf-8
 require './spec/spec_helper'
 
-describe Viagen do
+describe Viagem do
 
   context "Criação" do 
 

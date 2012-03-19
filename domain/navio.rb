@@ -9,8 +9,12 @@ class Navio < ActiveRecord::Base
 
 	def self.relatorio
    saida = []
-   navio = self.all.first
-   saida.push ({nome: navio.nome, capacidade: navio.capacidade, portos: navio.portos_data})
+   
+   self.all.each do |navio|
+     saida.push ({nome: navio.nome, capacidade: navio.capacidade, portos: navio.portos_data})
+   end
+
+   return saida
   end
 
   def portos_data

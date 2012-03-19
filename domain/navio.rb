@@ -11,7 +11,7 @@ class Navio < ActiveRecord::Base
 		if viaja_entre?(porto_origem, porto_destino)
       viagem_entre(porto_origem, porto_destino).first.data_chegada
     else
-      false
+      nil
     end 
 	end
 

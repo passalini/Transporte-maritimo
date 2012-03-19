@@ -19,7 +19,7 @@ describe Navio do
   it "pode ou nao ter cargas embarcadas" do 
     agente = Agente.create! nome: "Derp"
     carga = Carga.create! numero: 001, peso: 100, data_max_desembarque: Date.today + 15.days,
-                               porto_destino: @porto2, agente: agente
+                               porto_origem: @porto1, porto_destino: @porto2, agente: agente
     @navio.cargas << carga
 
     navio = Navio.find_by_id(@navio.id)

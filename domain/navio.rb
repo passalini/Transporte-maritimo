@@ -10,10 +10,10 @@ class Navio < ActiveRecord::Base
 	def self.relatorio
    saida = []
    navio = self.all.first
-   saida.push ({nome: navio.nome, capacidade: navio.capacidade, portos: navio.portos_navio})
+   saida.push ({nome: navio.nome, capacidade: navio.capacidade, portos: navio.portos_data})
   end
 
-  def portos_navio
+  def portos_data
     [self.portos_origem.first].concat self.viagens.map{|viagem| {viagem.porto_destino => viagem.data_chegada}}
   end
 

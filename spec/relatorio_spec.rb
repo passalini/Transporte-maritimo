@@ -11,8 +11,7 @@ describe "Relatorio" do
 
   context "Navios" do 
     it "deve informar nome, capacidade máxima, relação de portos(nome) de sua rota, com a data de chegada em cada porto destino." do
-      portos_navio = [@navio.portos_origem.first].concat @navio.viagens.map{|viagem| {viagem.porto_destino => viagem.data_chegada}}
-      Navio.relatorio.should == [{nome: "Navio 1", capacidade: 1000, portos: portos_navio}]
+      Navio.relatorio.should == [{nome: "Navio 1", capacidade: 1000, portos: @navio.portos_data}]
 
     end
   end

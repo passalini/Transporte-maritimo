@@ -18,8 +18,11 @@ describe Viagen do
                                    porto_destino: porto3, 
                                    data_chegada: Date.tomorrow + 3.days}.to raise_error(RuntimeError)
 
-      navio.viagens.create! porto_origem: porto2, porto_destino: porto3, data_chegada: Date.tomorrow + 3.days
-      navio.viagens.size.should == 2
+      navio.viagens.create! porto_origem: porto2, porto_destino: porto3, data_chegada: Date.tomorrow + 4.days
+      navio.viagens.create! porto_origem: porto3, porto_destino: porto2, data_chegada: Date.tomorrow + 5.days
+      
+      lambda {navio.viagens.create! porto_origem: porto2, porto_destino: porto1, data_chegada: Date.tomorrow + 5.days}.should_not raise_error
+      navio.viagens.size.should == 4
     end
   end
 end

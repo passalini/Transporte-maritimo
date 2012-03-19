@@ -28,17 +28,17 @@ describe "Embarcar carga" do
 
   it "deve ser possivel se o navio passar pelo porto destino da carga e antes da data_max_desembarque" do 
     navio2 = Navio.create! nome: 'Navio2', capacidade: '550'
-    navio2.viagens.create porto_origem: @porto2, porto_destino: @porto1, data_chegada: Date.tomorrow + 3.days
+    navio2.viagens.create! porto_origem: @porto2, porto_destino: @porto1, data_chegada: Date.tomorrow + 3.days
 
     @carga.embarcar(navio2)
     Navio.find_by_nome(navio2.nome).cargas.should_not include @carga
 
-    navio2.viagens.create porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 20.days
+    navio2.viagens.create! porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 20.days
     @carga.embarcar(navio2)
     
     Navio.find_by_nome(navio2.nome).cargas.should_not include @carga
 
-    navio2.viagens.find_by_porto_destino_id(@porto2.id).update_attributes(data_chegada: Date.today + 15.days)
+    navio2.viagens.find_by_porto_destino_id(@porto2.id).update_attributes(data_chegada: Date.today + 2.days)
     @carga.embarcar(navio2)
 
     Navio.find_by_nome(navio2.nome).cargas.should include @carga
@@ -50,10 +50,16 @@ describe "Embarcar carga" do
 
     Navio.find_by_nome(@navio.nome).cargas.should_not include @carga
 
-    @navio.viagens.create porto_origem: @porto3, porto_destino: @porto1, data_chegada: Date.tomorrow + 3.days
+    @navio.viagens.create! porto_origem: @porto2, porto_destino: @porto3, data_chegada: Date.tomorrow + 10.days
+    @navio.viagens.create! porto_origem: @porto3, porto_destino: @porto1, data_chegada: Date.tomorrow + 10.days
     @carga.embarcar @navio
 
     Navio.find_by_nome(@navio.nome).cargas.should_not include @carga
+
+    @navio.viagens.create! porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 30.days
+    @carga.embarcar @navio
+
+    Navio.find_by_nome(@navio.nome).cargas.should include @carga
   end
   
 end

@@ -7,17 +7,25 @@ class Navio < ActiveRecord::Base
 
 	has_many :cargas
 
-	def data_de_chegada(porto)
-		self.viagens.find_by_porto_destino_id(porto.id).data_chegada 
+	def data_de_chegada(porto_origem, porto_destino)
+		if viaja_entre?(porto_origem, porto_destino)
+      viagem_entre(porto_origem, porto_destino).first.data_chegada
+    else
+      false
+    end 
 	end
 
-	def viaja_entre?(porto_origem, porto_destino)
-		viagem_com_porto_origem = self.viagens.find_by_porto_origem_id(porto_origem.id)
+	def viagem_entre(porto_origem, porto_destino)
+    viagem_com_porto_origem = self.viagens.find_by_porto_origem_id(porto_origem.id)
 
     if not viagem_com_porto_origem.nil?
-      return true if not self.viagens.find_all{|viagem| viagem.created_at >= viagem_com_porto_origem.created_at}.select{|i| i.porto_destino == porto_destino}.empty?
+      return self.viagens.find_all{|viagem| viagem.created_at >= viagem_com_porto_origem.created_at}.select{|i| i.porto_destino == porto_destino}
     end
-    false
+    return []
+  end
+
+  def viaja_entre?(porto_origem, porto_destino)
+		not viagem_entre(porto_origem, porto_destino).empty?
   end
 end
 

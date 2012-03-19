@@ -7,7 +7,7 @@ class Carga < ActiveRecord::Base
 
 	def embarcar (navio)
 		if self.peso <= navio.capacidade and navio.viaja_entre?(self.porto_origem, self.porto_destino)
-			navio.cargas << self if navio.data_de_chegada(self.porto_destino) <= self.data_max_desembarque
+			navio.cargas << self if navio.data_de_chegada(self.porto_origem, self.porto_destino) <= self.data_max_desembarque
 		end
 	end
 end

@@ -7,7 +7,17 @@ class Navio < ActiveRecord::Base
 
 	has_many :cargas
 
-	def data_de_chegada(porto_origem, porto_destino)
+	def self.relatorio
+   saida = []
+   navio = self.all.first
+   saida.push ({nome: navio.nome, capacidade: navio.capacidade, portos: navio.portos_navio})
+  end
+
+  def portos_navio
+    [self.portos_origem.first].concat self.viagens.map{|viagem| {viagem.porto_destino => viagem.data_chegada}}
+  end
+
+  def data_de_chegada(porto_origem, porto_destino)
 		if viaja_entre?(porto_origem, porto_destino)
       viagem_entre(porto_origem, porto_destino).first.data_chegada
     else

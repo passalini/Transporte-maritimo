@@ -11,7 +11,7 @@ describe "Embarcar carga" do
                             porto_origem: @porto1 , porto_destino: @porto2, agente: agente
       
     @navio = Navio.create! nome: 'Navio1', capacidade: '550'
-    @navio.viagens.create porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 3.days
+    @viagem = @navio.viagens.create! porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 3.days
   end
 
   it "deve ser possivel se não exceder a capacidade do navio" do 
@@ -26,37 +26,25 @@ describe "Embarcar carga" do
     Navio.find_by_nome(@navio.nome).cargas.should include @carga
   end
 
-  it "deve ser possivel se o navio passar pelo porto destino da carga e antes da data_max_desembarque" do 
-    navio2 = Navio.create! nome: 'Navio2', capacidade: '550'
-    navio2.viagens.create! porto_origem: @porto2, porto_destino: @porto1, data_chegada: Date.tomorrow + 3.days
+  it "deve ser possivel se o navio passar pelo porto destino da carga antes da data_max_desembarque" do 
+    @carga.embarcar @navio
+    @navio.cargas.should include @carga
 
-    @carga.embarcar(navio2)
-    Navio.find_by_nome(navio2.nome).cargas.should_not include @carga
+    @navio.cargas.clear
+    @viagem.data_chegada = Date.today + 20.days
+    @carga.embarcar @navio
 
-    navio2.viagens.create! porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 20.days
-    @carga.embarcar(navio2)
-    
-    Navio.find_by_nome(navio2.nome).cargas.should_not include @carga
-
-    navio2.viagens.find_by_porto_destino_id(@porto2.id).update_attributes(data_chegada: Date.today + 2.days)
-    @carga.embarcar(navio2)
-
-    Navio.find_by_nome(navio2.nome).cargas.should include @carga
+    @navio.cargas.should_not include @carga
   end
 
-  it "carga deve estar no mesmo porto q navio" do 
-    @carga.update_attributes(porto_origem: @porto3, porto_destino: @porto2)
+  it "carga deve estar no mesmo porto q navio e passar pelo porto destino" do 
+    @carga.update_attributes(porto_origem: @porto2, porto_destino: @porto3)
     @carga.embarcar @navio
 
-    Navio.find_by_nome(@navio.nome).cargas.should_not include @carga
+    @navio.cargas.should_not include @carga
 
-    @navio.viagens.create! porto_origem: @porto2, porto_destino: @porto3, data_chegada: Date.tomorrow + 10.days
-    @navio.viagens.create! porto_origem: @porto3, porto_destino: @porto1, data_chegada: Date.tomorrow + 10.days
-    @carga.embarcar @navio
-
-    Navio.find_by_nome(@navio.nome).cargas.should_not include @carga
-
-    @navio.viagens.create! porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.tomorrow + 30.days
+    @navio.viagens.create! porto_origem: @porto2, porto_destino: @porto1, data_chegada: Date.tomorrow + 10.days
+    @navio.viagens.create! porto_origem: @porto1, porto_destino: @porto3, data_chegada: Date.tomorrow + 14.days
     @carga.embarcar @navio
 
     Navio.find_by_nome(@navio.nome).cargas.should include @carga

@@ -17,6 +17,14 @@ class Navio < ActiveRecord::Base
    return saida
   end
 
+  def self.em_manutencao
+    manutencao = []
+    self.all.each do |navio|
+      manutencao.push navio if navio.viagens.find_all{|viagem| viagem.data_chegada >= Date.today}.empty?
+    end
+    return manutencao
+  end
+
   def portos_data
     [self.portos_origem.first].concat self.viagens.map{|viagem| {viagem.porto_destino => viagem.data_chegada}}
   end

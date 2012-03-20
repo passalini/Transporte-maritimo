@@ -33,25 +33,36 @@ describe Relatorio do
   context "Cargas" do 
     it "para embarcadas, informar: número, porto destino, navio, data máxima para desembarque e data na qual o navio vai chegar no porto" do
       @carga.embarcar @navio
-      relatorio_cargas_embarcas = [{carga: @carga, data_chegada_navio: @navio.viagens.last.data_chegada}]
+      relatorio_cargas_embarcas = [{num_carga: @carga.numero, navio: @carga.navio.nome, porto_destino: @carga.porto_destino, data_max_desembarque: @carga.data_max_desembarque, data_chegada_navio: @carga.navio.data_de_chegada(@carga.porto_origem, @carga.porto_destino)} ]
       
       Relatorio.cargas_embarcadas.should == relatorio_cargas_embarcas
 
       5.times do |i|
         carga = Factory.create(:carga, peso: 10, porto_origem: @navio.portos_origem.first, porto_destino: @navio.portos_destino[i]).embarcar(@navio).last
-        relatorio_cargas_embarcas << {carga: carga, data_chegada_navio: @navio.viagens.find_by_porto_destino_id(@navio.portos_destino[i].id).data_chegada}
+        relatorio_cargas_embarcas << {num_carga: carga.numero, navio: carga.navio.nome, 
+                                      porto_destino: carga.porto_destino, data_max_desembarque: carga.data_max_desembarque, 
+                                      data_chegada_navio: @navio.viagens.find_by_porto_destino_id(@navio.portos_destino[i].id).data_chegada}
       end
-      
+        
       Relatorio.cargas_embarcadas.should == relatorio_cargas_embarcas
     end
 
-    it "cargas não embarcadas, informando: número da carga, porto destino, data máxima para desembarqu e código do agente receptor" do 
+    it "não embarcadas, informando: número da carga, porto destino, data máxima para desembarque e código do agente receptor" do 
+      Relatorio.cargas_nao_embarcadas.should include ({ num_carga: @carga.numero, porto: @carga.porto_destino.nome,
+                                                        cod_agente: @carga.agente.id, data_max_desembarque: @carga.data_max_desembarque})
+      
       @carga.embarcar @navio
+
+      Relatorio.cargas_nao_embarcadas.should_not include ({ num_carga: @carga.numero, porto: @carga.porto_destino.nome,
+                                                            cod_agente: @carga.agente.id, data_max_desembarque: @carga.data_max_desembarque})
+
       cargas_nao_embarcadas = []
       5.times{cargas_nao_embarcadas << Factory.create(:carga)}
+      cargas_nao_embarcadas.map!{|carga| { num_carga: carga.numero, porto: carga.porto_destino.nome,
+                                           cod_agente: carga.agente.id, data_max_desembarque: carga.data_max_desembarque} }
 
-      Relatorio.cargas_nao_embarcadas.should_not include @carga
       Relatorio.cargas_nao_embarcadas.should == cargas_nao_embarcadas
     end
+
   end
 end

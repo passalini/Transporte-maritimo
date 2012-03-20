@@ -5,7 +5,9 @@ class Relatorio
     cargas_embarcadas = []
     cargas = Carga.embarcadas
     cargas.each do |carga| 
-      cargas_embarcadas << {carga: carga, data_chegada_navio: carga.navio.data_de_chegada(carga.porto_origem, carga.porto_destino)} 
+      cargas_embarcadas << {num_carga: carga.numero, navio: carga.navio.nome, 
+                            porto_destino: carga.porto_destino, data_max_desembarque: carga.data_max_desembarque, 
+                            data_chegada_navio: carga.navio.data_de_chegada(carga.porto_origem, carga.porto_destino)} 
     end
     cargas_embarcadas
   end
@@ -14,7 +16,8 @@ class Relatorio
     cargas_nao_embarcadas = []
     cargas = Carga.nao_embarcadas
     cargas.each do |carga| 
-      cargas_nao_embarcadas << carga
+      cargas_nao_embarcadas << {num_carga: carga.numero, porto: carga.porto_destino.nome, 
+                                cod_agente: carga.agente.id, data_max_desembarque: carga.data_max_desembarque}
     end
     cargas_nao_embarcadas
   end

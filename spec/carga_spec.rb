@@ -28,7 +28,7 @@ describe Carga do
     it "deve retornar cargas embarcadas" do
       navio = Factory.create(:navio)
       viagem = Factory.create(:viagem, navio: navio)
-      p carga = Factory.create(:carga, porto_origem: viagem.porto_origem, porto_destino: viagem.porto_destino)
+      carga = Factory.create(:carga, porto_origem: viagem.porto_origem, porto_destino: viagem.porto_destino)
       Carga.embarcadas.should_not include carga
 
       carga.embarcar navio

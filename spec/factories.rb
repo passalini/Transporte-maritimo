@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :carga do
     sequence (:numero) { |n| "#{n}"}
-    peso "505"
+    peso 500
     data_max_desembarque {Date.today + 10.days}
     porto_origem {FactoryGirl.create :porto}
     porto_destino {FactoryGirl.create :porto}

@@ -29,4 +29,20 @@ describe "Relatorios" do
       Navio.em_manutencao.should_not include @navio
     end
   end
+
+  context "Cargas" do 
+    it "para embarcadas, informar: número, porto destino, navio, data máxima para desembarque e data na qual o navio vai chegar no porto" do
+      @carga.embarcar @navio
+      cargas_embarcas = [{carga: @carga, data_chegada_navio: @navio.viagens.last.data_chegada}]
+      
+      Carga.embarcadas.should == cargas_embarcas
+
+      5.times do |i|
+        carga = Factory.create(:carga, peso: 10, porto_origem: @navio.portos_origem.first, porto_destino: @navio.portos_destino[i]).embarcar(@navio).last
+        cargas_embarcas << {carga: carga, data_chegada_navio: @navio.viagens.find_by_porto_destino_id(@navio.portos_destino[i].id).data_chegada}
+      end
+      
+      Carga.embarcadas.should == cargas_embarcas
+    end
+  end
 end

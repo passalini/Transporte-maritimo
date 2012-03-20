@@ -7,25 +7,11 @@ class Navio < ActiveRecord::Base
 
 	has_many :cargas
 
-	def self.relatorio
-   saida = []
-   
-   self.all.each do |navio|
-     saida.push ({nome: navio.nome, capacidade: navio.capacidade, portos: navio.portos_data})
-   end
-
-   return saida
+  def em_manutencao?
+    self.viagens.find_all{|viagem| viagem.data_chegada >= Date.today}.empty?
   end
 
-  def self.em_manutencao
-    manutencao = []
-    self.all.each do |navio|
-      manutencao.push navio if navio.viagens.find_all{|viagem| viagem.data_chegada >= Date.today}.empty?
-    end
-    return manutencao
-  end
-
-  def portos_data
+  def portos_e_data_de_chegada
     [self.portos_origem.first].concat self.viagens.map{|viagem| {viagem.porto_destino => viagem.data_chegada}}
   end
 

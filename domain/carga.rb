@@ -26,14 +26,14 @@ class Carga < ActiveRecord::Base
 
     self.all.each do |carga|
       if carga.embarcada?  
-        @@cargas_embarcadas << {carga: carga, data_chegada_navio: carga.navio.data_de_chegada(carga.porto_origem, carga.porto_destino)} 
+        @@cargas_embarcadas << carga
       else
         @@cargas_nao_embarcadas << carga
       end
     end
   end
 
-  
+
 
   def embarcar (navio)
     if self.peso <= navio.capacidade and navio.viaja_entre?(self.porto_origem, self.porto_destino)

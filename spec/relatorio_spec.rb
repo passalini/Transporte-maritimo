@@ -64,5 +64,12 @@ describe Relatorio do
       Relatorio.cargas_nao_embarcadas.should == cargas_nao_embarcadas
     end
 
+    it "cargas não embarcadas porque não existe navio que passe pelo porto destino" do 
+      Relatorio.cargas_que_nao_tem_como_embarcar.should_not include @carga
+
+      carga_que_nao_tem_como_embarcar = Factory.create :carga, porto_origem: Factory.create(:porto), porto_destino: Factory.create(:porto)
+      Relatorio.cargas_que_nao_tem_como_embarcar.should include carga_que_nao_tem_como_embarcar
+    end
+
   end
 end

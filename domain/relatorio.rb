@@ -37,4 +37,12 @@ class Relatorio
     end
     manutencao
   end
+
+  def self.cargas_que_nao_tem_como_embarcar
+    todos_os_portos_destino = []
+    Navio.all.map{|navio| todos_os_portos_destino.concat navio.portos_destino}
+    cargas = Carga.nao_embarcadas
+
+    cargas.delete_if{|carga| todos_os_portos_destino.include? carga.porto_destino }
+  end
 end

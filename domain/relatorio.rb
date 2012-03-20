@@ -1,5 +1,37 @@
 require File.join(File.dirname(File.expand_path(__FILE__)), '..', 'config', 'ar_helper')
 
 class Relatorio
-  
+  def self.cargas_embarcadas
+    cargas_embarcadas = []
+    cargas = Carga.embarcadas
+    cargas.each do |carga| 
+      cargas_embarcadas << {carga: carga, data_chegada_navio: carga.navio.data_de_chegada(carga.porto_origem, carga.porto_destino)} 
+    end
+    cargas_embarcadas
+  end
+
+  def self.cargas_nao_embarcadas
+    cargas_nao_embarcadas = []
+    cargas = Carga.nao_embarcadas
+    cargas.each do |carga| 
+      cargas_nao_embarcadas << carga
+    end
+    cargas_nao_embarcadas
+  end
+
+  def self.navios
+    navios = [] 
+    Navio.all.each do |navio|
+      navios.push ({nome: navio.nome, capacidade: navio.capacidade, portos: navio.portos_e_data_de_chegada}) unless navio.em_manutencao?
+    end
+    navios
+  end
+
+  def self.navios_em_manutencao
+    manutencao = []
+    Navio.all.each do |navio|
+      manutencao.push navio if navio.em_manutencao?
+    end
+    manutencao
+  end
 end

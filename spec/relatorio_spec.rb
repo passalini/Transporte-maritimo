@@ -44,5 +44,14 @@ describe "Relatorios" do
       
       Carga.embarcadas.should == cargas_embarcas
     end
+
+    it "cargas não embarcadas, informando: número da carga, porto destino, data máxima para desembarqu e código do agente receptor" do 
+      @carga.embarcar @navio
+      cargas_nao_embarcadas = []
+      5.times{cargas_nao_embarcadas << Factory.create(:carga)}
+
+      Carga.nao_embarcadas.should_not include @carga
+      Carga.nao_embarcadas.should == cargas_nao_embarcadas
+    end
   end
 end

@@ -14,6 +14,7 @@ FactoryGirl.define do
 
   factory :agente do
     sequence (:nome) { |n| "agente #{n}"}
+    porto {FactoryGirl.create :porto}
   end
 
   factory :viagem do

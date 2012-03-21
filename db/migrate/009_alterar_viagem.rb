@@ -6,6 +6,6 @@ class AlterarViagem < ActiveRecord::Migration
   end
 
   def self.down
-    remove_column :cargas, :created_at, :updated_at
+    remove_column :viagens, :created_at, :updated_at
   end
 end

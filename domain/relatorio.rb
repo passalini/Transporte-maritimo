@@ -45,4 +45,10 @@ class Relatorio
 
     cargas.delete_if{|carga| todos_os_portos_destino.include? carga.porto_destino }
   end
+
+  def self.portos
+    portos_navios = []
+    Porto.all.map { |porto| portos_navios << {porto => porto.navios} }
+    portos_navios
+  end
 end

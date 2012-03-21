@@ -76,6 +76,17 @@ describe Relatorio do
 
       Relatorio.cargas_que_nao_tem_como_embarcar.should_not include carga_foo      
     end
+  end
+
+  context "Portos" do 
+    it "todos os navios que passarão por cada um" do
+      portos_navios = []
+      Porto.all.map { |porto| portos_navios << {porto => [@navio]} }
+      Relatorio.portos == portos_navios
+
+      navio2 = Factory.create :navio
+      
+    end
 
   end
 end

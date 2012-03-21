@@ -2,7 +2,8 @@ require File.join(File.dirname(File.expand_path(__FILE__)), '..', 'config', 'ar_
 
 class Agente < ActiveRecord::Base
 	belongs_to :porto
-
+  has_many :cargas
+  
   validates_presence_of :nome, :porto
 	
 end

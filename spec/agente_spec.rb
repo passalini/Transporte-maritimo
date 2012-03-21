@@ -9,6 +9,7 @@ describe Agente do
     agente = Factory.create :agente
     carga = Factory.create :carga
 
-    agente.cargas.should include carga
+    agente.cargas << carga
+    Agente.first.cargas.should include carga
   end
 end

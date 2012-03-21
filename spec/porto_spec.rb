@@ -6,9 +6,9 @@ describe Porto do
 
   it "pode ter nenhuma ou muitos agentes" do 
     porto = Factory.create :porto
-    agente = porto.agentes.build(nome: "Agente")
-    # agente2 = Factory.create :agente
+    agente = porto.agentes.create(nome: "Agente")
+    agente2 = porto.agentes.create(nome: "Agente 2")
 
-    Porto.first.agentes.should include agente #and agente2
+    Porto.first.agentes.should include agente and agente2
   end
 end

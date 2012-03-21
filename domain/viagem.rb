@@ -14,8 +14,8 @@ class Viagem < ActiveRecord::Base
   def validar_viagem
     if  Navio.find(navio_id).portos_origem.empty?
       true
-    else
-      raise "Porto de origem deve ser o mesmo que o porto destino da viagem anterior" unless Viagem.all.find_all{|i| i.navio_id == navio_id}.sort_by{|i| i[:created_at]}.last.porto_destino == porto_origem
+    elsif not Viagem.all.find_all{|i| i.navio_id == navio_id}.sort_by{|i| i[:created_at]}.last.porto_destino == porto_origem
+      raise "Porto de origem deve ser o mesmo que o porto destino da viagem anterior" 
     end
   end
 end

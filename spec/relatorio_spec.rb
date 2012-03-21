@@ -79,7 +79,17 @@ describe Relatorio do
       Relatorio.portos == portos_navios
 
       navio2 = Factory.create :navio
-      
+      Factory.create :viagem, navio: navio2, porto_destino: Porto.all.last
+
+      Porto.all.map { |porto| portos_navios << {porto => [@navio]} }
+      portos_navios
+      Relatorio.portos == portos_navios
+    end
+
+    it "agentes de cada um, com código e nome de cada agente, que não estão recepcionando cargas" do 
+      3.times{ Factory.create :agente, porto: Porto.all.last }
+
+      Relatorio.portos_agentes_sem_carga.should == [{Porto.all.last => Agentes.all.last(3)}]
     end
 
   end

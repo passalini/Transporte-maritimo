@@ -61,10 +61,10 @@ describe Relatorio do
     it "cargas não embarcadas porque não existe navio que passe pelo porto destino" do 
       Relatorio.cargas_que_nao_tem_como_embarcar.should_not include @carga
 
-      carga_foo = Factory.create :carga, porto_origem: Factory.create(:porto), porto_destino: Factory.create(:porto)
+      portos_da_carga_foo = [Factory.create(:porto), Factory.create(:porto)]
+      carga_foo = Factory.create :carga, porto_origem: portos_da_carga_foo.first , porto_destino: portos_da_carga_foo.last
       Relatorio.cargas_que_nao_tem_como_embarcar.should include carga_foo
 
-      portos_da_carga_foo = Porto.last(2)
       navio = Factory.create :navio
       Factory.create :viagem, navio: navio, porto_origem: portos_da_carga_foo.first, porto_destino: portos_da_carga_foo.last
 

@@ -7,7 +7,9 @@ describe Relatorio do
     @navio = Factory.create :navio
     Factory.create :viagem, navio: @navio
     4.times{|i| Factory.create :viagem, navio: @navio, porto_origem: Porto.all.last}
-    @carga = Factory.create :carga, porto_origem: Porto.all.first, porto_destino: Porto.all.last
+    
+    @agente = Factory.create :agente, porto: Porto.all.last
+    @carga = Factory.create :carga, porto_origem: Porto.all.first, porto_destino: Porto.all.last, agente: @agente
   end
 
   context "Navios" do 
@@ -89,7 +91,7 @@ describe Relatorio do
     it "agentes de cada um, com código e nome de cada agente, que não estão recepcionando cargas" do 
       3.times{ Factory.create :agente, porto: Porto.all.last }
 
-      Relatorio.portos_agentes_sem_carga.should == [{Porto.all.last => Agentes.all.last(3)}]
+      Relatorio.portos_agentes_sem_carga.should == [{Porto.all.last => Agente.all.last(3)}]
     end
 
   end

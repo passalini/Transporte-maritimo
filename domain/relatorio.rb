@@ -44,4 +44,10 @@ class Relatorio
     Porto.all.map { |porto| portos_navios << {porto => porto.navios} }
     portos_navios
   end
+
+  def self.portos_agentes_sem_carga
+    portos_navios = []
+    Porto.all.map { |porto| portos_navios << {porto => porto.agentes.delete_if{|agente| not agente.cargas.empty?} } }
+    portos_navios
+  end
 end

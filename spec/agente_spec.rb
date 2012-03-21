@@ -8,8 +8,12 @@ describe Agente do
   it "pode ter nenhuma ou muitas cargas" do 
     agente = Factory.create :agente
     carga = Factory.create :carga
+    carga2 = Factory.create :carga
 
     agente.cargas << carga
     Agente.first.cargas.should include carga
+
+    agente.cargas << carga2
+    Agente.first.cargas.should include carga and carga2
   end
 end

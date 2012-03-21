@@ -3,6 +3,8 @@ require 'yaml'
 require 'active_support/all'
 require File.join(File.dirname(__FILE__), 'module.rb')
 
+ActiveSupport::Deprecation.silenced = true
+
 ActiveSupport::Inflector.inflections do |inflect|
 inflect.plural /m$/i, 'ns'
 inflect.singular /ns$/i, 'm'

@@ -4,7 +4,7 @@ describe Navio do
   before do
     @porto1 = Porto.create! nome: "Porto1"
     @porto2 = Porto.create! nome: "Porto2"
-    @porto3 = Porto.create!
+    @porto3 = Porto.create! nome: "Porto3"
 
     @navio = Navio.create! nome: 'Navio1', capacidade: '550'
     @navio.viagens.create porto_origem: @porto1, porto_destino: @porto2, data_chegada: Date.today
@@ -17,7 +17,7 @@ describe Navio do
   end
 
   it "pode ou nao ter cargas embarcadas" do 
-    agente = Agente.create! nome: "Derp"
+    agente = @porto2.agentes.create nome: "Derp"
     carga = Carga.create! numero: 001, peso: 100, data_max_desembarque: Date.today + 15.days,
                                porto_origem: @porto1, porto_destino: @porto2, agente: agente
     @navio.cargas << carga

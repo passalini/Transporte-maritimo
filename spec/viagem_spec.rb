@@ -8,9 +8,9 @@ describe Viagem do
     it { should_not have_valid(:navio).when(nil) }
 
     it "em uma nova viagem, porto origem deve ser o porto destino da anterior" do
-      porto1 = Porto.create!
-      porto2 = Porto.create!
-      porto3 = Porto.create!
+      porto1 = Porto.create! nome: "Porto"
+      porto2 = Porto.create! nome: "Porto"
+      porto3 = Porto.create! nome: "Porto"
       navio = Navio.create!
 
       navio.viagens.create! porto_origem: porto1, porto_destino: porto2, data_chegada: Date.tomorrow + 3.days

@@ -3,9 +3,9 @@ require './spec/spec_helper'
 
 describe "Embarcar carga" do
   before do
-    agente = Agente.create! nome: "Derp"
     @porto1 = Porto.create! nome: "Porto origem da carga"
     @porto2 = Porto.create! nome: "Porto destino da carga"
+    agente = @porto2.agentes.create nome: "Derpe"
     @porto3 = Porto.create! nome: "Porto qualquer"
     @carga = Carga.create! numero: 001, peso: 100, data_max_desembarque: Date.today + 15.days,
                             porto_origem: @porto1 , porto_destino: @porto2, agente: agente
